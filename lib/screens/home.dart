@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wordlearner/screens/settings.dart';
+import 'package:wordlearner/screens/shelf.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -34,9 +36,9 @@ class HomeScreenState extends State<HomeScreen> {
 
     var myNavChildren = [
       headerChild,
-      //getNavItem(Icons.settings, "Settings", SettingsScreen.routeName),
       getNavItem(Icons.home, "Home", "/"),
-      //getNavItem(Icons.account_box, "Account", AccountScreen.routeName),
+      getNavItem(Icons.settings, "Settings", SettingsScreen.routeName),
+      getNavItem(Icons.bookmark , "Shelf", ShelfScreen.routeName),
       aboutChild
     ];
 
