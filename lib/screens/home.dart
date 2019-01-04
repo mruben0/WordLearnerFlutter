@@ -37,9 +37,9 @@ class HomeScreenState extends State<HomeScreen> {
 
     var myNavChildren = [
       headerChild,
-      getNavItem(Icons.home, "Home", "/"),
+      getNavItem(Icons.home, "Home", "/"),      
+      getNavItem(Icons.keyboard, "Learn", GameScreen.routeName),
       getNavItem(Icons.bookmark , "Shelf", ShelfScreen.routeName),
-      getNavItem(Icons.keyboard, "Game", GameScreen.routeName),
       getNavItem(Icons.settings, "Settings", SettingsScreen.routeName),
       aboutChild
     ];

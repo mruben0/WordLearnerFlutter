@@ -13,6 +13,7 @@ environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
 
 dependencies:
+  spreadsheet_decoder: ^1.0.0
   flutter_document_picker: ^1.2.0
   flutter:
     sdk: flutter
