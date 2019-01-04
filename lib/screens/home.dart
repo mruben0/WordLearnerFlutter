@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wordlearner/screens/game.dart';
 import 'package:wordlearner/screens/settings.dart';
 import 'package:wordlearner/screens/shelf.dart';
 
@@ -37,8 +38,9 @@ class HomeScreenState extends State<HomeScreen> {
     var myNavChildren = [
       headerChild,
       getNavItem(Icons.home, "Home", "/"),
-      getNavItem(Icons.settings, "Settings", SettingsScreen.routeName),
       getNavItem(Icons.bookmark , "Shelf", ShelfScreen.routeName),
+      getNavItem(Icons.keyboard, "Game", GameScreen.routeName),
+      getNavItem(Icons.settings, "Settings", SettingsScreen.routeName),
       aboutChild
     ];
 
