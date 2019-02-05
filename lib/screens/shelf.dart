@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:wordlearner/models/document.dart';
 import 'package:wordlearner/screens/designedWidgets/texts.dart';
-import 'package:wordlearner/services/sheetReader.dart';
 
 
 class ShelfScreen extends StatefulWidget{
@@ -14,7 +13,6 @@ class ShelfScreen extends StatefulWidget{
 
 class ShelfScreenState extends State<ShelfScreen>{
 
-  SheetReader reader = new SheetReader();
   String _fileName = "-";
   List<Document> _paths = new List<Document>();
   bool _pickFileInProgress = false;
@@ -131,9 +129,6 @@ _pickDocument() async {
         _pickFileInProgress = false;
       });
     }
-
-    var rows = reader.getDictionary(result, 5, "E","A");
-    rows.forEach((f,v)=>print(f+": "+ v));
 
     var parts = result.split('/');
     _fileName = parts.last;

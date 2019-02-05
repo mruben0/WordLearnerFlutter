@@ -14,6 +14,7 @@ environment:
 
 dependencies:
   spreadsheet_decoder: ^1.0.0
+  open_file: ^1.1.1
   flutter_document_picker: ^1.2.0
   flutter:
     sdk: flutter

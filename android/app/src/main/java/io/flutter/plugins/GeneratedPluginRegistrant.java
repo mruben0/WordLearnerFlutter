@@ -2,6 +2,7 @@ package io.flutter.plugins;
 
 import io.flutter.plugin.common.PluginRegistry;
 import com.sidlatau.flutterdocumentpicker.FlutterDocumentPickerPlugin;
+import com.crazecoder.openfile.OpenFilePlugin;
 
 /**
  * Generated file. Do not edit.
@@ -12,6 +13,7 @@ public final class GeneratedPluginRegistrant {
       return;
     }
     FlutterDocumentPickerPlugin.registerWith(registry.registrarFor("com.sidlatau.flutterdocumentpicker.FlutterDocumentPickerPlugin"));
+    OpenFilePlugin.registerWith(registry.registrarFor("com.crazecoder.openfile.OpenFilePlugin"));
   }
 
   private static boolean alreadyRegisteredWith(PluginRegistry registry) {
