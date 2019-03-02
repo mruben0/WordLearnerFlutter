@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wordlearner/screens/game.dart';
 import 'package:wordlearner/screens/settings.dart';
 import 'package:wordlearner/screens/shelf.dart';
+import 'package:wordlearner/screens/shortGame.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -41,6 +42,7 @@ class HomeScreenState extends State<HomeScreen> {
       getNavItem(Icons.keyboard, "Learn", GameScreen.routeName),
       getNavItem(Icons.bookmark , "Shelf", ShelfScreen.routeName),
       getNavItem(Icons.settings, "Settings", SettingsScreen.routeName),
+      getNavItem(Icons.short_text, "fast learn", ShortGameScreen.routeName),
       aboutChild
     ];
 

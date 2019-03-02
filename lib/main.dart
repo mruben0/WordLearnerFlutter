@@ -3,6 +3,7 @@ import 'package:wordlearner/screens/game.dart';
 import 'package:wordlearner/screens/home.dart';
 import 'package:wordlearner/screens/settings.dart';
 import 'package:wordlearner/screens/shelf.dart';
+import 'package:wordlearner/screens/shortGame.dart';
 
 
 void main() => runApp(new MaterialApp(
@@ -12,6 +13,7 @@ void main() => runApp(new MaterialApp(
     ShelfScreen.routeName: (BuildContext context) => new ShelfScreen(),
     SettingsScreen.routeName: (BuildContext context) => new SettingsScreen(),
     GameScreen.routeName: (BuildContext context) => new GameScreen(),
+    ShortGameScreen.routeName: (BuildContext context)=> new ShortGameScreen()
   },
 ));
 

@@ -45,10 +45,10 @@ class GameScreen extends StatefulWidget{
             Expanded(
               child: Column(
               children: <Widget>[
-              _buildParam("Ask Letter", askLetterController,1),
-              _buildParam( "Answer letter", answerLetterController,1),
-              _buildParam( "From", fromController, 5),
-              _buildParam("to", toController,5),
+              _buildParam("Ask Letter", askLetterController,1, new FocusNode()),
+              _buildParam( "Answer letter", answerLetterController,1, answerFocusNode),
+              _buildParam( "From", fromController, 5, new FocusNode()),
+              _buildParam("to", toController,5, new FocusNode()),
 
                        ],
                      ),)
@@ -57,13 +57,14 @@ class GameScreen extends StatefulWidget{
                   );
       }
       
- Row _buildParam(String hinText, TextEditingController editingController, int maxlength){
-
+ Row _buildParam(String hinText, TextEditingController editingController, int maxlength, FocusNode focuseNode)
+{
           return Row(
               children: <Widget>[
               Flexible(
                   child:
                 TextFormField(
+                  focusNode: focuseNode,
                 validator: (value) {
                             if (value.isEmpty) {
                                  return 'Please enter some text';
@@ -106,6 +107,7 @@ class GameScreen extends StatefulWidget{
     String askWord = "-";
     String answer = "";
     List<String> _rightAnswered = new List<String>();
+    var answerFocusNode = new FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -197,8 +199,7 @@ TextEditingController toController = new TextEditingController();
   checkAndStep() {
     answer = answerController.text;
     key = askWord;
-    result = answer == dictionary[key];
-    print(dictionary[key]);
+    result = answer.replaceAll(" ", "") == dictionary[key].replaceAll(" ", "");
     if(result)
     {
      _rightAnswered.add(key);
@@ -224,7 +225,7 @@ TextEditingController toController = new TextEditingController();
        askWord = newKey;
        count = dictionary.length;
       });
-
+      FocusScope.of(context).requestFocus(answerFocusNode);
     }
   }
   String showedAnswer = "tap here to view answer";
