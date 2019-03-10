@@ -1,4 +1,3 @@
-
 import 'dart:math';
 import 'package:flutter/material.dart';
 
@@ -11,8 +10,13 @@ class ShortGameScreen extends StatefulWidget{
 }
   
   class ShortGameScreenState extends State<StatefulWidget> {
+
+    ShortGameScreenState(){
+    child = new Text("Bitte Wartet");
+    rand = new Random();
+    }
   var dictionary ={
-        "bringen" :     "բերել",
+        "bringen" : "բերել",
         "denken" : "մտածել",
         "erhalten" : "ստանալ",
         "essen" : "ուտել",
@@ -20,6 +24,7 @@ class ShortGameScreen extends StatefulWidget{
         "fernsehen": "հեռուստացույց նայել",
   };
 
+  Widget child;
   String askWord = "--";
   String answer = "";
   String key = "";
@@ -29,48 +34,22 @@ class ShortGameScreen extends StatefulWidget{
   String showedAnswer = "tap here to view answer";
   TextEditingController answerController = new TextEditingController();   
   var answerFocusNode = new FocusNode();
+  Random rand;
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home:Scaffold(
         appBar: AppBar( 
         title: Text("Short Learning"),
       ),
-      body: ListView(
-        children: <Widget>[
+      body: learningWidget(),
 
-          Text(askWord), 
-          Row(
-              children: <Widget>[
-              Flexible(
-                  child:
-                TextFormField(
-                focusNode: answerFocusNode,
-                validator: (value) {
-                            if (value.isEmpty) {
-                                 return 'Please enter some text';
-                              }
-                   },
-                controller: answerController,
-                autofocus: true,
-                onFieldSubmitted: answerSubmitted,
-                                decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintStyle: TextStyle(color: Colors.grey))),)
-                          ],)
-                
-                        ],
-                      ),
-                      floatingActionButton: floatingActionButton(),
-                      ) 
-                    );}
-                
-      void answerSubmitted(String value) {
-        checkAndStep();
-  }
+        floatingActionButton: floatingActionButton(),
+        ) 
+      );}                
+      
   FloatingActionButton floatingActionButton(){
       return new FloatingActionButton(
         onPressed: (){_start();},
@@ -78,21 +57,58 @@ class ShortGameScreen extends StatefulWidget{
       );
   }
 
-  _start(){
-    setState((){
-    askWord = _getNewWord();
-    });
+
+  Widget learningWidget(){
+    
+    return 
+     ListView(
+              shrinkWrap: true,
+
+              children: <Widget>[
+                Text(askWord), 
+                Text(result.toString()),
+                _textFormFieldBuilder(answerFocusNode,answerController,answerSubmitted)
+     ],);
+    
   }
 
-  String _getNewWord(){
-    Random rand = new Random();
-    var newIndex = rand.nextInt(dictionary.length);
-    return dictionary.keys.toList()[newIndex];
+  TextFormField _textFormFieldBuilder(FocusNode focusMode, TextEditingController editingController, Function answerSubmittingFunction)
+  {
+   return TextFormField(
+      focusNode: focusMode,
+      validator: (value) {
+                  if (value.isEmpty) {
+                       return 'Please enter some text';
+                    }
+         },
+      controller: editingController,
+      autofocus: true,
+      onFieldSubmitted: answerSubmittingFunction,
+                      decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(color: Colors.grey)));
+
   }
+
+  
+
+  void answerSubmitted(String value) {
+        checkAndStep();
+  }
+
+  _start(){
+    setState((){
+      child = learningWidget();
+      askWord =_getNewWord();
+    });
+  } 
 
   checkAndStep() {
     answer = answerController.text;
     key = askWord;
+    
+    FocusScope.of(context).requestFocus(answerFocusNode);
+
     result = answer.replaceAll(" ", "") == dictionary[key].replaceAll(" ", "");
     if(result)
     {
@@ -101,6 +117,7 @@ class ShortGameScreen extends StatefulWidget{
     var keys = _rightAnswered.where((s) => s==key).toList();
     if(keys.length > 2){
        dictionary.remove(key);
+    }
        if(dictionary.length == 0){
        return showDialog(
             context: context,
@@ -110,8 +127,7 @@ class ShortGameScreen extends StatefulWidget{
               );
             },
           );
-    }
-     }
+         }     
      var newKey = _getNewWord();
      setState(() {
        answerController.text = "";
@@ -119,7 +135,39 @@ class ShortGameScreen extends StatefulWidget{
        askWord = newKey;
        count = dictionary.length;
       });
-      FocusScope.of(context).requestFocus(answerFocusNode);
+      }
     }
-  } 
-} 
+  
+
+  //filePart
+
+// Widget newWordAddingWidget(){
+//     return 
+//      ListView(
+//               shrinkWrap: true,
+
+//               children: <Widget>[
+//                 Text("Add new Word"), 
+//                 TextFormField(
+//                 //focusNode: answerFocusNode,
+//                 validator: (value) {
+//                             if (value.isEmpty) {
+//                                  return 'Please enter some text';
+//                               }
+//                    },
+//                 controller: answerController,
+//                 autofocus: true,
+//                 onFieldSubmitted: answerSubmitted,
+//                                 decoration: InputDecoration(
+//                                 border: InputBorder.none,
+//                                 hintStyle: TextStyle(color: Colors.grey))),
+//                           ],);
+//       }
+//   }
+  String _getNewWord(){
+    var newIndex = rand.nextInt( dictionary.length);
+    print(newIndex);
+    return dictionary.keys.toList()[newIndex];
+  }
+
+  }

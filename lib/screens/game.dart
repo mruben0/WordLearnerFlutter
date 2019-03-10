@@ -45,10 +45,10 @@ class GameScreen extends StatefulWidget{
             Expanded(
               child: Column(
               children: <Widget>[
-              _buildParam("Ask Letter", askLetterController,1, new FocusNode()),
-              _buildParam( "Answer letter", answerLetterController,1, answerFocusNode),
-              _buildParam( "From", fromController, 5, new FocusNode()),
-              _buildParam("to", toController,5, new FocusNode()),
+              _buildParam("Ask Letter", askLetterController,1),
+              _buildParam( "Answer letter", answerLetterController,1),
+              _buildParam( "From", fromController, 5),
+              _buildParam("to", toController,5),
 
                        ],
                      ),)
@@ -57,14 +57,13 @@ class GameScreen extends StatefulWidget{
                   );
       }
       
- Row _buildParam(String hinText, TextEditingController editingController, int maxlength, FocusNode focuseNode)
+ Row _buildParam(String hinText, TextEditingController editingController, int maxlength)
 {
           return Row(
               children: <Widget>[
               Flexible(
                   child:
                 TextFormField(
-                  focusNode: focuseNode,
                 validator: (value) {
                             if (value.isEmpty) {
                                  return 'Please enter some text';
@@ -79,9 +78,7 @@ class GameScreen extends StatefulWidget{
                 hintStyle: TextStyle(color: Colors.grey))),)
           ],);
       }
-
-
-
+      
   bool _pickFileInProgress = false;
   SheetReader reader = new SheetReader();
   final _extensionController = TextEditingController(
@@ -129,6 +126,7 @@ class GameScreen extends StatefulWidget{
               new Text(count.toString()),
               new Text(askWord),
               new TextField(
+                focusNode: answerFocusNode,
                 controller: answerController,
                 onSubmitted: (s) {checkAndStep();} ,
                 autofocus: true,
@@ -196,7 +194,7 @@ TextEditingController toController = new TextEditingController();
     return dictionary.keys.toList()[newIndex];
   }
 
-  checkAndStep() {
+    checkAndStep() {
     answer = answerController.text;
     key = askWord;
     result = answer.replaceAll(" ", "") == dictionary[key].replaceAll(" ", "");
@@ -228,6 +226,7 @@ TextEditingController toController = new TextEditingController();
       FocusScope.of(context).requestFocus(answerFocusNode);
     }
   }
+  
   String showedAnswer = "tap here to view answer";
   showAnswer(){
     if(dictionary.containsKey(askWord))
