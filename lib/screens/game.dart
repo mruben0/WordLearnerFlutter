@@ -46,7 +46,7 @@ class GameScreen extends StatefulWidget{
               child: Column(
               children: <Widget>[
               _buildParam("Ask Letter", askLetterController,1),
-              _buildParam( "Answer letter", answerLetterController,1),
+              _buildParam( "Answer letter", answerLetterController,2),
               _buildParam( "From", fromController, 5),
               _buildParam("to", toController,5),
 
