@@ -26,12 +26,15 @@ Map<String, String> getDictionary(String path,int from, int to ,String askLetter
     var rows = table.first.rows;
     Map<String, String> map = new Map<String, String>() ;  
     var neededRows = rows.where((l)=> rows.indexOf(l) >= from && rows.indexOf(l)<=to);
+    
     if (answIndex.length > 0) {
       for (var row in neededRows) {
         String answer = "";
 
        for (var i = 0; i < answIndex.length; i++) {
-         answer += row[int.parse(answIndex[i])] + " ";
+         if ( row[int.parse(answIndex[i])] != null) {
+            answer += row[int.parse(answIndex[i])] + " ";
+         }
        }         
        map[row[askIndex]] = answer;
     }
