@@ -38,8 +38,9 @@ class GameScreen extends StatefulWidget{
       }
 
      
-      Widget paramSection(){
-    return new Container(padding: EdgeInsets.all(30.0),
+      Widget paramSection(bool isInitialized){
+        if(!isInitialized){
+          return new Container(padding: EdgeInsets.all(30.0),
         child: Row(
           children: <Widget>[
             Expanded(
@@ -55,6 +56,8 @@ class GameScreen extends StatefulWidget{
                    ],
                   ),
                   );
+        }
+          else return new Container();
       }
       
  Row _buildParam(String hinText, TextEditingController editingController, int maxlength)
@@ -117,9 +120,10 @@ class GameScreen extends StatefulWidget{
           ),
           body: ListView(
             children: <Widget>[
-
+            new MaterialButton(onPressed: () {restart();}, child: new Text("Restart"),),
+            new MaterialButton(onPressed: () {forceTrue();}, child: new Text("Make True"),),
              titleSection(),
-             paramSection(),
+             paramSection(isInitialized),
 
 
               new Text(result.toString()),
@@ -194,11 +198,29 @@ TextEditingController toController = new TextEditingController();
     return dictionary.keys.toList()[newIndex];
   }
 
-    checkAndStep() {
+    forceTrue(){  
+    checkAndStep(isForceTrue: true);  
+    }
+
+    restart(){
+     
+      _rightAnswered = new List<String>();
+      dictionary = new Map<String, String>();
+      isPicked = false;
+      _documentName = "Add File to start";
+      answerController.text = "";
+      askWord = "";
+      count = 0;      
+       setState(() {
+        isInitialized = false;
+      });
+    }
+
+    checkAndStep({bool isForceTrue = false}) {
     answer = answerController.text;
     key = askWord;
     result = answer.replaceAll(" ", "") == dictionary[key].replaceAll(" ", "");
-    if(result)
+    if(result || isForceTrue)
     {
      _rightAnswered.add(key);
      showedAnswer = "tap here to view answer";
@@ -271,7 +293,7 @@ TextEditingController toController = new TextEditingController();
   }
 
   openFile(){
-    if(isInitialized){
+    if(isPicked){
       OpenFile.open(_documentPath);
     }
   }
