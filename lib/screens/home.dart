@@ -27,9 +27,7 @@ class HomeScreenState extends State<HomeScreen> {
         title: new Text(s),
         onTap: () {
           setState(() {
-            // pop closes the drawer
             Navigator.of(context).pop();
-            // navigate to the route
             Navigator.of(context).pushNamed(routeName);
           });
         },
@@ -59,12 +57,45 @@ class HomeScreenState extends State<HomeScreen> {
       appBar: new AppBar(
         title: new Text("Navigation Drawer"),
       ),
-      body: new Container(
-          child: new Center(
-        child: new Text("Home Screen"),
-      )),
+      body: _buildGrid(),
       // Set the nav drawer
       drawer: getNavDrawer(context),
     );
   }
+
+  Widget _buildGrid() => GridView.extent(
+    maxCrossAxisExtent: 150,
+    padding: const EdgeInsets.all(4),
+    mainAxisSpacing: 4,
+    crossAxisSpacing: 4,
+    children: _buildLayout());
+    
+    List<GestureDetector> _buildLayout(){
+      var containers = new List<GestureDetector>();
+      containers.add(_buildMenuItem(Icons.keyboard,"Train", new GameScreen()));
+      containers.add(_buildMenuItem(Icons.library_books,"Shelf", new ShelfScreen()));
+      containers.add(_buildMenuItem(Icons.pageview,"Test", new ShortGameScreen()));
+      containers.add(_buildMenuItem(Icons.settings, "Settings", new SettingsScreen()));
+
+      return containers;
+    }
+
+    GestureDetector _buildMenuItem(IconData icon, String name, StatefulWidget screen){
+     return GestureDetector( child:Card(child:new Container(
+       padding: new EdgeInsets.all(32.0),
+       child: Column (children: <Widget>[
+        Icon(
+          icon,
+          color: Colors.green,
+          size: 30.0,
+        ), 
+      Text(name)
+
+     ],) )),onTap: () {
+      Navigator.push(
+       context,
+       MaterialPageRoute(builder: (context) => screen),
+      ); });
+    }
+      
 }
